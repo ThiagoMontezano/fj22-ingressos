@@ -1,7 +1,11 @@
 package br.com.caelum.ingresso.controller;
 
-import javax.validation.Valid;
-
+import br.com.caelum.ingresso.dao.FilmeDao;
+import br.com.caelum.ingresso.dao.SalaDao;
+import br.com.caelum.ingresso.dao.SessaoDao;
+import br.com.caelum.ingresso.model.GerenciadorDeSessoes;
+import br.com.caelum.ingresso.model.Sessao;
+import br.com.caelum.ingresso.model.form.SessaoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,11 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.caelum.ingresso.dao.FilmeDao;
-import br.com.caelum.ingresso.dao.SalaDao;
-import br.com.caelum.ingresso.dao.SessaoDao;
-import br.com.caelum.ingresso.model.Sessao;
-import br.com.caelum.ingresso.model.form.SessaoForm;
+import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class SessaoController {
@@ -31,7 +32,6 @@ public class SessaoController {
 	
 	@GetMapping("/sessao")
 	public ModelAndView form(@RequestParam("salaId") Integer salaId, SessaoForm form){
-		
 		form.setSalaId(salaId);
 		ModelAndView modelAndView = new ModelAndView("sessao/sessao");
 		
@@ -44,17 +44,18 @@ public class SessaoController {
 	
 	@PostMapping(value="/sessao")
 	@Transactional
-	public ModelAndView salva(@Valid SessaoForm form, BindingResult result){
-		
-		if(result.hasErrors())
-			return form(form.getSalaId(),form);
-		
-		ModelAndView modelAndView = new ModelAndView("redirect:/sala/"+form.getSalaId()+"/sessoes");
-		
+	public ModelAndView salva(@Valid SessaoForm form, BindingResult result) {
+		if (result.hasErrors())
+			return form(form.getSalaId(), form);
+
 		Sessao sessao = form.toSessao(salaDao, filmeDao);
-		sessaoDao.save(sessao);
-		
-		return modelAndView;
+		List<Sessao> sessoesDaSala = sessaoDao.buscaSessoesDaSala(sessao.getSala());
+		GerenciadorDeSessoes gerenciadorDeSessoes = new GerenciadorDeSessoes(sessoesDaSala);
+		if (gerenciadorDeSessoes.cabe(sessao)) {
+			sessaoDao.save(sessao);
+			return new ModelAndView("redirect:/sala/" + form.getSalaId() + "/sessoes");
+		}
+		return form(form.getSalaId(), form);
 	}
 	
 }
