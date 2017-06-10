@@ -49,27 +49,27 @@
 	        </div>
 
 <%-- 			<sec:authorize access="hasRole('COMPRADOR')"> --%>
-<!-- 				<table class="table table-hover"> -->
-<!-- 					<thead> -->
-<!-- 						<th>Sala</th> -->
-<!-- 						<th>Horario</th> -->
-<!-- 						<th>Ações</th> -->
-<!-- 					</thead> -->
-<!-- 					<tbody> -->
-<%-- 						<c:forEach items="${sessoes}" var="sessao"> --%>
-<!-- 							<tr> -->
-<%-- 								<td>${sessao.sala.nome}</td> --%>
-<%-- 								<td>${sessao.horario}</td> --%>
-<!-- 								<td> -->
-<%-- 									<a href="/sessao/${sessao.id}/lugares" class="btn"> --%>
-<!-- 										Comprar -->
-<!-- 										<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> -->
-<!-- 									</a> -->
-<!-- 								</td> -->
-<!-- 							</tr> -->
-<%-- 						</c:forEach> --%>
-<!-- 					</tbody> -->
-<!-- 				</table> -->
+				<table class="table table-hover">
+					<thead>
+						<th>Sala</th>
+						<th>Horario</th>
+						<th>Ações</th>
+					</thead>
+					<tbody>
+						<c:forEach items="${sessoes}" var="sessao">
+							<tr>
+								<td>${sessao.sala.nome}</td>
+								<td>${sessao.horario}</td>
+								<td>
+									<a href="/sessao/${sessao.id}/lugares" class="btn">
+										Comprar
+										<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+									</a>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 <%-- 			</sec:authorize> --%>
 		</div>
     </jsp:body>
