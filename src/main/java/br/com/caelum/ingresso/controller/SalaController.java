@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -39,8 +41,6 @@ public class SalaController {
     }
 
 
-
-
     @PostMapping("/sala")
     @Transactional
     public ModelAndView salva(@Valid Sala sala, BindingResult result){
@@ -48,7 +48,6 @@ public class SalaController {
         if (result.hasErrors()){
             return form(Optional.ofNullable(sala.getId()) ,sala);
         }
-
         salaDao.save(sala);
         return new ModelAndView("redirect:/salas");
     }
@@ -85,7 +84,6 @@ public class SalaController {
 
         return modelAndView;
     }
-
 
     @DeleteMapping("/sala/{id}")
     @ResponseBody
