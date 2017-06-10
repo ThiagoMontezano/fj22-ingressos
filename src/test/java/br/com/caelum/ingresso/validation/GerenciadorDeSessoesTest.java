@@ -7,6 +7,8 @@ import br.com.caelum.ingresso.model.Sessao;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
@@ -19,10 +21,10 @@ public class GerenciadorDeSessoesTest {
 	public void deveAdicionarSeListaDaSessaoEstiverVazia() {
 		List<Sessao> sessoes = Collections.emptyList();
 		GerenciadorDeSessoes gerenciadorDeSessoes = new GerenciadorDeSessoes(sessoes);
-		Filme filme = new Filme();
+		Filme filme = new Filme("Rogue One", Duration.ofMinutes(120),"SCI-FI", BigDecimal.ONE);
 		filme.setDuracao(120);
 		LocalTime horario = LocalTime.now();
-		Sala sala = new Sala("");
+		Sala sala = new Sala("Eldorado - MAX", BigDecimal.ONE);
 		Sessao sessao = new Sessao(filme, sala, horario);
 		boolean cabe = gerenciadorDeSessoes.cabe(sessao);
 		Assert.assertTrue(cabe);
@@ -30,10 +32,10 @@ public class GerenciadorDeSessoesTest {
 
 	@Test
 	public void garanteQueNaoDevePermitirSessaoNoMesmoHorario() {
-		Filme filme = new Filme();
+		Filme filme = new Filme("Rogue One", Duration.ofMinutes(120),"SCI-FI", BigDecimal.ONE);
 		filme.setDuracao(120);
 		LocalTime horario = LocalTime.now();
-		Sala sala = new Sala("");
+		Sala sala = new Sala("Eldorado - MAX", BigDecimal.ONE);
 		Sessao sessao = new Sessao(filme, sala, horario);
 		List<Sessao> sessoes = Arrays.asList(sessao);
 		GerenciadorDeSessoes gerenciador = new GerenciadorDeSessoes(sessoes);
@@ -42,10 +44,10 @@ public class GerenciadorDeSessoesTest {
 
 	@Test
 	public void garanteQueNaoDevePermitirSessoesIniciandoDentroDoHorarioDeUmaSessaoJaExistente() {
-		Filme filme = new Filme();
+		Filme filme = new Filme("Rogue One", Duration.ofMinutes(120),"SCI-FI", BigDecimal.ONE);
 		filme.setDuracao(120);
 		LocalTime horario = LocalTime.now();
-		Sala sala = new Sala("");
+		Sala sala = new Sala("Eldorado - MAX", BigDecimal.ONE);
 		List<Sessao> sessoesDaSala =  Collections.singletonList(new Sessao(filme, sala, horario));
 		GerenciadorDeSessoes gerenciadorDeSessoes = new GerenciadorDeSessoes(sessoesDaSala);
 		Assert.assertFalse(gerenciadorDeSessoes.cabe(new Sessao(filme, sala,horario.plus(1, ChronoUnit.HOURS))));
@@ -53,12 +55,12 @@ public class GerenciadorDeSessoesTest {
 
 	@Test
 	public void garanteQueDevePermitirUmaInsercaoentreDoisFilmes(){
-		Sala sala = new Sala("");
-		Filme filme = new Filme();
+		Sala sala = new Sala("Eldorado - MAX", BigDecimal.ONE);
+		Filme filme = new Filme("Rogue One", Duration.ofMinutes(120),"SCI-FI", BigDecimal.ONE);
 		filme.setDuracao(90);
 		LocalTime dezHoras = LocalTime.parse("10:00:00");
 		Sessao sessaoDasDez = new Sessao(filme, sala, dezHoras);
-		Filme outroFilme = new Filme();
+		Filme outroFilme = new Filme("Rogue One", Duration.ofMinutes(120),"SCI-FI", BigDecimal.ONE);;
 		outroFilme.setDuracao(120);
 		LocalTime dezoitoHoras = LocalTime.parse("18:00:00");
 		Sessao sessaoDasDezoito = new Sessao(outroFilme, sala, dezoitoHoras);
