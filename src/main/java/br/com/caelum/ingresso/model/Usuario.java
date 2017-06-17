@@ -40,6 +40,9 @@ public class Usuario implements UserDetails {
 	private Integer id;
 	
 	private String email;
+	
+	private String password;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -56,6 +59,7 @@ public class Usuario implements UserDetails {
 		this.email = email;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -71,8 +75,6 @@ public class Usuario implements UserDetails {
 	public void setPermissoes(Set<Permissao> permissoes) {
 		this.permissoes = permissoes;
 	}
-
-	private String password;
 	
 	@ManyToMany
 	private Set<Permissao> permissoes = new HashSet<>();

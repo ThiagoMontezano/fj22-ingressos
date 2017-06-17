@@ -9,15 +9,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
-import br.com.caelum.ingresso.model.Filme;
 import br.com.caelum.ingresso.model.Usuario;
 
 @Repository
 public class LoginDao implements UserDetailsService {
 
 	@PersistenceContext
-	private EntityManager manager;
-	
+	private EntityManager manager;	
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
