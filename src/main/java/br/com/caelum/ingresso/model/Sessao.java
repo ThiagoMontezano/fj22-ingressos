@@ -38,7 +38,13 @@ public class Sessao {
 		
 	}
 	
-    public Sessao(Filme filme, Sala sala, LocalTime horario) {
+    @Override
+	public String toString() {
+		return "Sessao [id=" + id + ", filme=" + filme + ", sala=" + sala + ", horario=" + horario + ", preco=" + preco
+				+ ", ingressos=" + ingressos + "]";
+	}
+
+	public Sessao(Filme filme, Sala sala, LocalTime horario) {
 		this.filme = filme;
 		this.sala = sala;
 		this.horario = horario;
