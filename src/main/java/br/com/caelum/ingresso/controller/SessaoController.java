@@ -43,7 +43,7 @@ public class SessaoController {
     @Autowired
     private Carrinho carrinho;
 	
-	@GetMapping("/sessao")
+	@GetMapping("/admin/sessao")
 	public ModelAndView form(@RequestParam("salaId") Integer salaId, SessaoForm form){
 		form.setSalaId(salaId);
 		ModelAndView modelAndView = new ModelAndView("sessao/sessao");
@@ -55,7 +55,7 @@ public class SessaoController {
 		return modelAndView;
 	}
 	
-	@PostMapping(value="/sessao")
+	@PostMapping(value="/admin/sessao")
 	@Transactional
 	public ModelAndView salva(@Valid SessaoForm form, BindingResult result) {
 		if (result.hasErrors())
