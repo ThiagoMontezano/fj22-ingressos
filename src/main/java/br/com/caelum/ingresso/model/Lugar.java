@@ -17,7 +17,12 @@ public class Lugar {
     @GeneratedValue
     private Integer id;
 
-    @NotBlank
+    @Override
+	public String toString() {
+		return "Lugar [id=" + id + ", fileira=" + fileira + ", posicao=" + posicao + "]";
+	}
+
+	@NotBlank
     private String fileira;
 
     @NotNull

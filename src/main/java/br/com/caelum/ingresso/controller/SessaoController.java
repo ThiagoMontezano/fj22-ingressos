@@ -78,6 +78,7 @@ public class SessaoController {
 		Sessao sessao = sessaoDao.findOne(sessaoId);
 		Optional<ImagemCapa> imagemCapa = client.request(sessao.getFilme(), ImagemCapa.class);
 		
+		System.out.println(sessao.getMapaDeLugares());
 		modelAndView.addObject("sessao",sessao);
 		modelAndView.addObject("carrinho",carrinho);
 		modelAndView.addObject("imagemCapa",imagemCapa.orElse(new ImagemCapa()));
